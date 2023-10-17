@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node index.js",
+    "list": "node index.js list",
     "create": "node index.js create",
     "get": "node index.js get",
     "update": "node index.js update",

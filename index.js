@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("node:fs");
 const { nanoid } = require("nanoid");
 const { faker } = require('@faker-js/faker');
 const { writeFileSync } = require("node:fs");
@@ -72,7 +72,7 @@ function listAllMovies() {
     return movies;
 }
 
-function updateMovie() {
+function updateMovieById(id) {
     
 }
 
@@ -93,7 +93,7 @@ function saveMovies() {
     console.log('data was saved to movies.json');
 }
 
-console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.floor(Math.random() * 10000), inStock: true}));
+console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.floor(Math.random() * 10000), inStock: faker.datatype.boolean()}));
 // saveMovies();
 // console.log(listAllMovies());
 // console.log(getMovieById("02DXB"));
