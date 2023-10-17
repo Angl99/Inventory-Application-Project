@@ -9,7 +9,7 @@ obj = {
     name: faker.custom.movieNames(),
     genre: faker.custom.genres(),
     priceInCents: Math.random() * 100000,
-    inStock: true
+    inStock: faker.datatype.boolean
 }
 */
 
@@ -47,8 +47,6 @@ function generateMovieNames() {
 
       return movieNames[Math.floor(Math.random() * movieNames.length)];
 }
-faker.custom = {};
-faker.custom.movieNames = generateMovieNames();
 
 function generateGenres() {
     const genres = [
@@ -59,8 +57,11 @@ function generateGenres() {
     ];
     return genres[Math.floor(Math.random() * genres.length)];
 }
-faker.custom = {};
-faker.custom.genres = generateGenres();
+faker.custom = {
+    movieNames: generateMovieNames,
+    genres: generateGenres
+};
+
 
 
 
@@ -70,25 +71,27 @@ function addMovie(data) {
     return data;
 }
 
-function listAllMovies(params) {
+function listAllMovies() {
     
 }
 
-function updateMovie(params) {
+function updateMovie() {
     
 }
 
-function getMovie(params) {
+function getMovie() {
     
 }
 
-function deleteMovie(params) {
+function deleteMovie() {
     
 }
 
 function saveMovies() {
     const stringifiedData = JSON.stringify(movies, null, 2);
     fs.writeFileSync("./data/movies.json", stringifiedData); 
+    console.log('data was saved to movies.json');
 }
 
-addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.random() * 10000, inStock: true})
+console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.random() * 10000, inStock: true}));
+saveMovies();
