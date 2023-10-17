@@ -5,5 +5,26 @@
     "genre": "Psychological Thriller",
     "priceInCents": 1404.5977971890377,
     "inStock": true
+  },
+  {
+    "id": "NAUDc",
+    "name": "Blade Runner 1982",
+    "genre": "Action",
+    "priceInCents": 3952,
+    "inStock": true
+  },
+  {
+    "id": "mbuhR",
+    "name": "Blade Runner 1982",
+    "genre": "Action",
+    "priceInCents": 7476,
+    "inStock": true
+  },
+  {
+    "id": "rAJQY",
+    "name": "There will be blood",
+    "genre": "Horror",
+    "priceInCents": 2250,
+    "inStock": true
   }
 ]

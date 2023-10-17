@@ -2,6 +2,7 @@ const fs = require("fs");
 const { nanoid } = require("nanoid");
 const { faker } = require('@faker-js/faker');
 const { writeFileSync } = require("node:fs");
+const movies = require("./data/movies.json");
 
 /*
 obj = {
@@ -10,11 +11,9 @@ obj = {
     genre: faker.custom.genres(),
     priceInCents: Math.random() * 100000,
     inStock: faker.datatype.boolean
+    Math.floor(Math.random() * 10000
 }
 */
-
-
-const movies = [];
 
 function generateMovieNames() {
     const movieNames = [ 
@@ -63,8 +62,6 @@ faker.custom = {
 };
 
 
-
-
 // Creating movie entry
 function addMovie(data) {
     movies.push(data);
@@ -72,19 +69,22 @@ function addMovie(data) {
 }
 
 function listAllMovies() {
-    
+    return movies;
 }
 
 function updateMovie() {
     
 }
 
-function getMovie() {
-    
-}
+function getMovieById(id) {
+    return movies.find(movie => movie.id === id);
+}  
 
-function deleteMovie() {
-    
+function deleteMovieByName(name) {
+    const index = movies.findIndex(movie => movie.name === name);
+    movies.splice(index, 1);
+    console.log(`${name} was deleted`);
+    return movies;
 }
 
 function saveMovies() {
@@ -93,5 +93,10 @@ function saveMovies() {
     console.log('data was saved to movies.json');
 }
 
-console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.random() * 10000, inStock: true}));
-saveMovies();
+console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.floor(Math.random() * 10000), inStock: true}));
+// saveMovies();
+// console.log(listAllMovies());
+// console.log(getMovieById("02DXB"));
+// console.log(deleteMovieByName("The Cabin in the Woods"));
+// console.log(listAllMovies());
+// saveMovies();
