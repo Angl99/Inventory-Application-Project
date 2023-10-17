@@ -64,7 +64,12 @@ faker.custom = {
 
 // Creating movie entry
 function addMovie(data) {
-    id: `${nanoid(5)}`
+    movies.id = `${nanoid(5)}`;
+    movies.name = faker.custom.movieNames();
+    movies.genre = faker.custom.genres();
+    movies.priceInCents = Math.floor(Math.random() * 10000);
+    movies.inStock = faker.datatype.boolean;
+
     movies.push(data);
     saveMovies();
     return data;
@@ -75,7 +80,16 @@ function listAllMovies() {
 }
 
 function updateMovieById(id) {
-    
+    const index = movies.findIndex(movie => movie.id === id);
+    if(movies[index]) {
+        movies[index] = {
+            ...movies[index],
+            name: faker.custom.movieNames(),
+            genre: faker.custom.genres(),
+            priceInCents: Math.floor(Math.random() * 10000),
+            inStock: faker.datatype.boolean
+        }
+    }
 }
 
 function getMovieById(id) {
