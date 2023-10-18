@@ -47,5 +47,12 @@
     "genre": "Psychological Thriller",
     "priceInCents": 2979,
     "inStock": "15"
+  },
+  {
+    "id": "6rR5Z",
+    "name": "Matrix Trilogy",
+    "genre": "Psychological Thriller",
+    "priceInCents": 3046,
+    "inStock": "6"
   }
 ]

@@ -117,13 +117,40 @@ function deleteMovieById(id) {
   return `Error: Movie by id: ${id} was not found.`;
 }
 
+function listCartItems() {
+    return cart;
+}
+
 function addMovieToCart(id, quantity) {
     const movie = getMovieById(id);
     if(movie) {
         const items = cart.find((item) => item.id === id);
+        if(items) {
+            items.quantity += quantity;
+        } else {
+            cart.push({
+                id,
+                quantity
+            });
+        }
+        saveCart();
+        return cart;
     }
 }
 
+function cancelOrder() {
+    cart.length = 0;
+    saveCart();
+    return cart;
+}
+
+function calcCartTotal(id) {
+    const items = cart.find((item) => item.id === id);
+    if(items) {
+        return items.quantity * items.priceInCents;
+    }
+    return `Error: Item by id: ${id} was not found.`;
+}
 
 
 

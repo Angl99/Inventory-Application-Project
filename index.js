@@ -12,8 +12,8 @@ const {
 
 const expectedCommand = process.argv[2];
 
-let red = chalk.Color.red;
-// const item = {}
+let red = chalk.red;
+const item = {}
 
 switch (expectedCommand) {
     case "create":
@@ -25,7 +25,7 @@ switch (expectedCommand) {
         console.log('All movies: \n', result);
         break;
     case "update":
-        result = updateMovieById(id, data);
+        result = updateMovieById();
         console.log('Movie updated: \n', result);
         break;
     case "get":
@@ -34,7 +34,7 @@ switch (expectedCommand) {
         break;
     case "delete":
         result = deleteMovieById(id);
-        console.log(red(`Movie with the given id was deleted`));
+        console.log(red(`Movie with the ${id} was deleted`));
         console.log(`Current Movies: \n`, listAllMovies());
         break;
     default:
