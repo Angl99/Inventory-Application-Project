@@ -1,126 +1,138 @@
 const fs = require("node:fs");
 const { nanoid } = require("nanoid");
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
 const { writeFileSync } = require("node:fs");
-const movies = require("./data/movies.json");
+const movies = require("../data/movies.json");
+const chalk = require("chalk");
 
-/*
-obj = {
-    id: `${nanoid(5)}`,
-    name: faker.custom.movieNames(),
-    genre: faker.custom.genres(),
-    priceInCents: Math.random() * 100000,
-    inStock: faker.datatype.boolean
-    Math.floor(Math.random() * 10000
-}
-*/
+
+let blue = chalk.blue;
 
 function generateMovieNames() {
-    const movieNames = [ 
-        "Interstellar",
-        "Blade Runner 1982",
-        "Matrix Trilogy",
-        "Ex Machina",
-        "Train to busan",
-        "V/H/S",
-        "Come True",
-        "Lord of the Rings Trilogy",
-        "Her",
-        "Eternal Sunshine of the Spotless Mind",
-        "Terminator Trilogy",
-        "2001: A Space Odyssey",
-        "The Cabin in the Woods",
-        "Alien",
-        "The Mist",
-        "Spider-Man 2",
-        "Inception",
-        "Drive",
-        "There will be blood",
-        "Nightmare on elm street",
-        "Old boy",
-        "I Saw the Devil",
-        "Parasite",
-        "The Dark Knight Trilogy",
-        "Shutter Island"
-      ];
+  const movieNames = [
+    "Interstellar",
+    "Blade Runner 1982",
+    "Matrix Trilogy",
+    "Ex Machina",
+    "Train to busan",
+    "V/H/S",
+    "Come True",
+    "Lord of the Rings Trilogy",
+    "Her",
+    "Eternal Sunshine of the Spotless Mind",
+    "Terminator Trilogy",
+    "2001: A Space Odyssey",
+    "The Cabin in the Woods",
+    "Alien",
+    "The Mist",
+    "Spider-Man 2",
+    "Inception",
+    "Drive",
+    "There will be blood",
+    "Nightmare on elm street",
+    "Old boy",
+    "I Saw the Devil",
+    "Parasite",
+    "The Dark Knight Trilogy",
+    "Shutter Island",
+  ];
 
-      return movieNames[Math.floor(Math.random() * movieNames.length)];
+  return movieNames[Math.floor(Math.random() * movieNames.length)];
 }
+const cart = [];
 
 function generateGenres() {
-    const genres = [
-        "Action",
-        "Sci-fi",
-        "Horror",
-        "Psychological Thriller"
-    ];
-    return genres[Math.floor(Math.random() * genres.length)];
+  const genres = ["Action", "Sci-fi", "Horror", "Psychological Thriller"];
+  return genres[Math.floor(Math.random() * genres.length)];
 }
 faker.custom = {
-    movieNames: generateMovieNames,
-    genres: generateGenres
+  movieNames: generateMovieNames,
+  genres: generateGenres,
 };
 
-
-// Creating movie entry
-function addMovie(data) {
-    movies.id = `${nanoid(5)}`;
-    movies.name = faker.custom.movieNames();
-    movies.genre = faker.custom.genres();
-    movies.priceInCents = Math.floor(Math.random() * 10000);
-    movies.inStock = faker.datatype.boolean;
-
-    movies.push(data);
-    saveMovies();
-    return data;
-}
-
-function listAllMovies() {
-    return movies;
-}
-
-function updateMovieById(id) {
-    const index = movies.findIndex(movie => movie.id === id);
-    if(movies[index]) {
-        movies[index] = {
-            ...movies[index],
-            name: faker.custom.movieNames(),
-            genre: faker.custom.genres(),
-            priceInCents: Math.floor(Math.random() * 10000),
-            inStock: faker.datatype.boolean
-        }
-    }
-}
-
-function getMovieById(id) {
-    return movies.find(movie => movie.id === id);
-}  
-
-function deleteMovieByName(name) {
-    const index = movies.findIndex(movie => movie.name === name);
-    movies.splice(index, 1);
-    console.log(`${name} was deleted`);
-    saveMovies();
-    return movies;
+function randomNum(min, max) {
+  return (Math.random() * (max - min) + min).toFixed(0);
 }
 
 function saveMovies() {
-    const stringifiedData = JSON.stringify(movies, null, 2);
-    fs.writeFileSync("./data/movies.json", stringifiedData); 
-    console.log('data was saved to movies.json');
+  const stringifiedData = JSON.stringify(movies, null, 2);
+  fs.writeFileSync("./data/movies.json", stringifiedData);
+  console.log(blue("Data was saved to movies.json"));
 }
 
-// console.log(addMovie({ id: `${nanoid(5)}`, name: faker.custom.movieNames(), genre: faker.custom.genres(), priceInCents: Math.floor(Math.random() * 10000), inStock: faker.datatype.boolean()}));
-// console.log(listAllMovies());
-// console.log(getMovieById("02DXB"));
-// console.log(deleteMovieByName("The Cabin in the Woods"));
-// console.log(listAllMovies());
+function saveCart() {
+    const stringifiedData = JSON.stringify(cart, null, 2);
+    fs.writeFileSync("./data/cart.json", stringifiedData);
+    console.log(blue("Data was saved to cart.json"));
+}
+
+// Creating movie entry
+function addMovie() {
+  const newMovie = {
+    id: `${nanoid(5)}`,
+    name: faker.custom.movieNames(),
+    genre: faker.custom.genres(),
+    priceInCents: Math.floor(Math.random() * 10000),
+    inStock: randomNum(0, 20),
+  };
+
+  movies.push(newMovie);
+  saveMovies();
+  return newMovie;
+}
+
+// Listing all movies
+function listAllMovies() {
+  return movies;
+}
+
+// get a movie by id
+function getMovieById(id) {
+  return movies.find((movie) => movie.id === id);
+}
+
+// Updating a movie
+function updateMovieById(id, updatedMovie) {
+  const currentMovie = getMovieById(id);
+  if(currentMovie) {
+    const index = movies.findIndex((movie) => movie.id === id);
+    movies[index] = {
+        ...currentMovie,
+        ...updatedMovie
+    }
+    saveMovies();
+    return movies;
+  }
+  return `Error: Movie by id: ${id} was not found.`;
+}
+
+// Deleting a movie by name
+function deleteMovieById(id) {
+  const index = movies.findIndex((movie) => movie.id === id);
+  if(index) {
+    movies.splice(index, 1);
+    saveMovies();
+    return movies;
+  }
+  return `Error: Movie by id: ${id} was not found.`;
+}
+
+function addMovieToCart(id, quantity) {
+    const movie = getMovieById(id);
+    if(movie) {
+        const items = cart.find((item) => item.id === id);
+    }
+}
+
+
 
 
 module.exports = {
-    addMovie,
-    listAllMovies,
-    updateMovieById,
-    getMovieById,
-    deleteMovieByName
+  addMovie,
+  listAllMovies,
+  updateMovieById,
+  getMovieById,
+  deleteMovieById,
+  saveMovies,
+  saveCart
 };
