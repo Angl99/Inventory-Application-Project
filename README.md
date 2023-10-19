@@ -1,9 +1,9 @@
-# Welcome to Cryptic Cinema Collectibles!
-![Welcome to Cryptic Cinema Collectibles!](https://media2.giphy.com/media/vPsOppq7dmsuc/200.gif)
+# Welcome to Horror House of Cinema!
+![Welcome to Horror House of Cinema!](https://media2.giphy.com/media/vPsOppq7dmsuc/200.gif)
 
 ## Prerequisites
 
-Before using the Cryptic Cinema Collectibles Shop, ensure that you have npm installed and use:
+Before using the Horror House of Cinema Shop, ensure that you have npm installed and use:
 
     npm install
 
