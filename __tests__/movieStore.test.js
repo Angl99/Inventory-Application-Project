@@ -1,4 +1,3 @@
-// const getMovieById = require("../src/movieStore");s
 const movies = require("../data/movies.json");
 const {
   addMovie,
