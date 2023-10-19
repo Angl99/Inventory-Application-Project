@@ -28,7 +28,6 @@ const data = {
 
 let quantity = process.argv[4];
 
-// const item = {}
 
 switch (expectedCommand) {
     case "create":
@@ -76,10 +75,3 @@ switch (expectedCommand) {
         console.log(`Error: Command not found`);
         break;
 }
-
-/*
-"addcart": "node index.js addcart",
-"listcart": "node index.js listcart",
-"cancelorder": "node index.js cancel",
-"calctotal": "node index.js calculate"
-*/
