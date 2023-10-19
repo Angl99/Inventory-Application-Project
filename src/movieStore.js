@@ -155,7 +155,7 @@ function calcCartTotal() {
     const movie = getMovieById(item.id);
     total += movie.priceInCents * item.quantity;
   });
-  let fixedTotal = (total/100).toFixed(2);
+  let fixedTotal = (total / 100).toFixed(2);
   return green(`Your total is $${fixedTotal}.`);
 }
 

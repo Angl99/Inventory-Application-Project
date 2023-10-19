@@ -80,7 +80,7 @@ Adding a new movie:
 
 ### Updating a movie:
 
-    node index.js update ["name" "genre" "priceInCents" "in_stock"]
+    node index.js update <name> <genre> <priceInCents>  <in_stock>
 
 ### Retrieving a movie by ID:
 
