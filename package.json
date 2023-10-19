@@ -10,7 +10,11 @@
     "create": "node index.js create",
     "get": "node index.js get",
     "update": "node index.js update",
-    "delete": "node index.js delete"
+    "delete": "node index.js delete",
+    "addcart": "node index.js addcart",
+    "listcart": "node index.js listcart",
+    "cancelorder": "node index.js cancel",
+    "calculate": "node index.js calculate"
   },
   "keywords": [],
   "author": "Anggel",

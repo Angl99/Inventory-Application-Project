@@ -4,10 +4,10 @@ const { faker } = require("@faker-js/faker");
 const { writeFileSync } = require("node:fs");
 const movies = require("../data/movies.json");
 const chalk = require("chalk");
-
+const cart = require("../data/cart.json");
 
 let blue = chalk.blue;
-
+let green = chalk.green;
 function generateMovieNames() {
   const movieNames = [
     "Interstellar",
@@ -39,7 +39,6 @@ function generateMovieNames() {
 
   return movieNames[Math.floor(Math.random() * movieNames.length)];
 }
-const cart = [];
 
 function generateGenres() {
   const genres = ["Action", "Sci-fi", "Horror", "Psychological Thriller"];
@@ -61,9 +60,13 @@ function saveMovies() {
 }
 
 function saveCart() {
+  try {
     const stringifiedData = JSON.stringify(cart, null, 2);
     fs.writeFileSync("./data/cart.json", stringifiedData);
     console.log(blue("Data was saved to cart.json"));
+  } catch (error) {
+    console.error("Error saving cart data:", error);
+  }
 }
 
 // Creating movie entry
@@ -94,12 +97,12 @@ function getMovieById(id) {
 // Updating a movie
 function updateMovieById(id, updatedMovie) {
   const currentMovie = getMovieById(id);
-  if(currentMovie) {
+  if (currentMovie) {
     const index = movies.findIndex((movie) => movie.id === id);
     movies[index] = {
-        ...currentMovie,
-        ...updatedMovie
-    }
+      ...currentMovie,
+      ...updatedMovie,
+    };
     saveMovies();
     return movies;
   }
@@ -109,7 +112,7 @@ function updateMovieById(id, updatedMovie) {
 // Deleting a movie by name
 function deleteMovieById(id) {
   const index = movies.findIndex((movie) => movie.id === id);
-  if(index) {
+  if (index) {
     movies.splice(index, 1);
     saveMovies();
     return movies;
@@ -118,43 +121,43 @@ function deleteMovieById(id) {
 }
 // List all cart items
 function listCartItems() {
-    return cart;
+  return cart;
 }
 // Add a movie to cart
 function addMovieToCart(id, quantity) {
-    const movie = getMovieById(id);
-    if(movie) {
-        const items = cart.find((item) => item.id === id);
-        if(items) {
-            items.quantity += quantity;
-        } else {
-            cart.push({
-                id,
-                quantity
-            });
-        }
-        saveCart();
-        return cart;
+  const movie = getMovieById(id);
+  if (movie) {
+    const items = cart.find((item) => item.id === id);
+    if (items) {
+      items.quantity += quantity;
+    } else {
+      cart.push({
+        id,
+        quantity,
+      });
     }
+    saveCart();
+    return cart;
+  }
 }
 
 // Cancel an order
 function cancelOrder() {
-    cart.length = 0;
-    saveCart();
-    return cart;
+  cart.length = 0;
+  saveCart();
+  return cart;
 }
 
 // Calculate cart total
-function calcCartTotal(id) {
-    const items = cart.find((item) => item.id === id);
-    if(items) {
-        return items.quantity * items.priceInCents;
-    }
-    return `Error: Item by id: ${id} was not found.`;
+function calcCartTotal() {
+  let total = 0;
+  cart.forEach((item) => {
+    const movie = getMovieById(item.id);
+    total += movie.priceInCents * item.quantity;
+  });
+  let fixedTotal = (total/100).toFixed(2);
+  return green(`Your total is $${fixedTotal}.`);
 }
-
-
 
 module.exports = {
   addMovie,
@@ -167,5 +170,5 @@ module.exports = {
   listCartItems,
   addMovieToCart,
   cancelOrder,
-  calcCartTotal
+  calcCartTotal,
 };
