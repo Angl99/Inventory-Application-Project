@@ -1,5 +1,18 @@
-const getMovieById = require("../src/movieStore");
+// const getMovieById = require("../src/movieStore");s
 const movies = require("../data/movies.json");
+const {
+  addMovie,
+  listAllMovies,
+  updateMovieById,
+  getMovieById,
+  deleteMovieById,
+  saveMovies,
+  saveCart,
+  listCartItems,
+  addMovieToCart,
+  cancelOrder,
+  calcCartTotal,
+} = require("../src/movieStore");
 
 describe("getMovieById", () => {
   it("should return the correct movie when a valid id is provided", () => {
