@@ -116,11 +116,11 @@ function deleteMovieById(id) {
   }
   return `Error: Movie by id: ${id} was not found.`;
 }
-
+// List all cart items
 function listCartItems() {
     return cart;
 }
-
+// Add a movie to cart
 function addMovieToCart(id, quantity) {
     const movie = getMovieById(id);
     if(movie) {
@@ -138,12 +138,14 @@ function addMovieToCart(id, quantity) {
     }
 }
 
+// Cancel an order
 function cancelOrder() {
     cart.length = 0;
     saveCart();
     return cart;
 }
 
+// Calculate cart total
 function calcCartTotal(id) {
     const items = cart.find((item) => item.id === id);
     if(items) {
@@ -161,5 +163,9 @@ module.exports = {
   getMovieById,
   deleteMovieById,
   saveMovies,
-  saveCart
+  saveCart,
+  listCartItems,
+  addMovieToCart,
+  cancelOrder,
+  calcCartTotal
 };

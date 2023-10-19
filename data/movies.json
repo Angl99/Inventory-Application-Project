@@ -54,5 +54,12 @@
     "genre": "Psychological Thriller",
     "priceInCents": 3046,
     "inStock": "6"
+  },
+  {
+    "id": "hbf7F",
+    "name": "Matrix",
+    "genre": "Sci-fi",
+    "priceInCents": "9000",
+    "inStock": "10"
   }
 ]

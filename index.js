@@ -6,35 +6,51 @@ const {
     getMovieById,
     deleteMovieById,
     saveMovies,
-    saveCart
+    saveCart,
+    listCartItems,
+    addMovieToCart,
+    cancelOrder,
+    calcCartTotal
   } = require("./src/movieStore");
 
 
 const expectedCommand = process.argv[2];
 
 let red = chalk.red;
-const item = {}
+let green = chalk.green;
+const id = process.argv[3];
+const data = {
+    name: process.argv[4],
+    genre: process.argv[5],
+    priceInCents: process.argv[6],
+    inStock: process.argv[7],
+}
+// const item = {}
 
 switch (expectedCommand) {
     case "create":
         result = addMovie();
-        console.log('New movie added: \n', result);
+        console.log(green('New movie added: \n'), result);
         break;
     case "list":
         result = listAllMovies();
-        console.log('All movies: \n', result);
+        console.log(green('All movies: \n'), result);
         break;
     case "update":
-        result = updateMovieById();
-        console.log('Movie updated: \n', result);
+        result = updateMovieById(id, data);
+        console.log(green('Movie updated: \n'), result);
         break;
     case "get":
         result = getMovieById(id);
-        console.log('Movie found: \n', result);
+        if (result !== undefined) {
+            console.log(green('Movie found: \n'), result);
+        } else {
+            console.log(red(`Error: Please provide a valid id.`));
+        }
         break;
     case "delete":
         result = deleteMovieById(id);
-        console.log(red(`Movie with the ${id} was deleted`));
+        console.log(red(`Movie with the id ${id} was deleted`));
         console.log(`Current Movies: \n`, listAllMovies());
         break;
     default:
